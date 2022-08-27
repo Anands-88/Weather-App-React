@@ -1,0 +1,20 @@
+
+#reportBox{
+    margin-top: 5px;
+    height:180px;
+    overflow-x: scroll;
+    display: grid;
+    border:2px solid red;
+    grid-template-columns: repeat(8,130px);
+}
+
+.content{
+    text-align: center;
+    line-height: 3px;
+    /* border:2px solid red; */
+}
+
+.content > img{
+    width:50px;
+    height:50px;
+}
