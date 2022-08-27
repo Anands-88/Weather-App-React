@@ -1,17 +1,23 @@
 
 #reportBox{
     margin-top: 5px;
-    height:180px;
+    height:200px;
     overflow-x: scroll;
-    display: grid;
     border:2px solid red;
-    grid-template-columns: repeat(8,130px);
+    display: grid;
+    grid-template-columns: repeat(8,140px);
 }
 
 .content{
+    height:94%;
     text-align: center;
     line-height: 3px;
-    /* border:2px solid red; */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 0px;
+    border-radius: 15px;
+}
+
+.content:checked{
+    border:4px solid yellow;
 }
 
 .content > img{

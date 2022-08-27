@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { Some } from '.';
 import './App.css'
 import { SevenDays } from './Components/SevenDaysReport';
+import { TemperatureChart } from './Components/Temp_Chart';
 
 
 function App() {
@@ -73,7 +74,8 @@ function showPosition(position) {
         <button></button>
       </div>
       <SevenDays data={weather}/>
-      {/* <button onClick={()=>{getLocation()}}>Click</button> */}
+      <button onClick={()=>{getLocation()}}>Click</button>
+      <TemperatureChart/>
     </div>
   );
 }
