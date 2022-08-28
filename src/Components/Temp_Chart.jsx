@@ -12,14 +12,15 @@ import Style from "./temp_chart.module.css"
 //     Rain:rain
 // }
 
-export const TemperatureChart = ({hour,data}) =>{
+export const TemperatureChart = ({dataFor,data}) =>{
 
-
-    let hourlyData = useMemo(()=>{
+    let chartData = useMemo(()=>{
 
         let twentyFour = [];
-
-       for(let elem of hour){
+        let {max,min} = dataFor.seven[0].temp;
+        let count = 0;
+        
+       for(let elem of dataFor.hours){
             let res = new Date(elem.dt*1000).toLocaleString("en-UK", {timeZone: 'Asia/Kolkata'})
             const date = res.slice(0,10);
             const time = res.slice(12,17);
@@ -38,33 +39,55 @@ export const TemperatureChart = ({hour,data}) =>{
                     twentyFour.push(elem);
                 }
             }
+            else
+            {
+                let randomTemp = Math.round(Math.random() * (max - min) + min)
+                if(count <= 23 )
+                {
+                    twentyFour.push({...elem,temp:+randomTemp});
+                }
+                else
+                {
+                    break;
+                }
+                count++
+            }
         }
 
-        console.log(twentyFour,"24")
+        let returnData = []
+        twentyFour.map((elem,index)=>{
+            let obj = {x:elem.temp,y:index}
+            returnData.push(obj)
+        })
+
+        return returnData
 
     },[data])
 
-    const chartData = [
-        { x: 1, y: 0 },
-        { x: 2, y: 8 },
-        { x: 3, y: 5 },
-        { x: 4, y: 4 },
-        { x: 5, y: 6 }
-        ]
 
     return <div className={Style.ChartBox}>
         <div className={Style.TempBox}>
             <h1>{data.temp|0}°C <img src={data.main} alt={data.main} /></h1>
         </div>
-        <VictoryChart 
-            theme={VictoryTheme.material}>
-            <VictoryArea
-                animate={{
-                    duration: 3000,
-                    onLoad: { duration: 3000 }
-                  }}
-                style={{ data: { fill: "black" } }}
-                data={chartData}/>
-        </VictoryChart>
+        <div>
+            <VictoryChart 
+                height={440}
+                width={1200}
+                theme={VictoryTheme.material}>
+                <VictoryArea
+                interpolation="monotoneX"
+                labels={({ datum }) => datum.x}
+                    animate={{
+                        duration: 3000,
+                        onLoad: { duration: 3000 }
+                    }}
+                    style={{
+                        data: { fill: "tomato"},
+                        labels: { fontSize: 12 },
+                        parent: { border: "10px ridge black"}
+                      }}
+                    data={chartData}/>
+            </VictoryChart>
+        </div>
     </div>
 }

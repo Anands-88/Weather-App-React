@@ -89,8 +89,8 @@ function showPosition(position) {
   let {latitude,longitude} = position.coords
 
   axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely&appid=${code}&units=metric`)
-  .then(({data})=>{
-    console.log(data,"Data")
+  .then((res)=>{
+    let data = res.data
       setWeather({
           ...weather,
           seven:data.daily,
@@ -142,7 +142,7 @@ const handleSearch = useCallback(
         <div onClick={()=>{showPosition(inputValue)}} className="SearchResult">
           {inputValue.result == "Not Found"
           ?
-          <strong>{inputValue.result}</strong>
+          <strong style={{margin:"3% 0 0 20px"}}>{inputValue.result}</strong>
           :
           <>
             <strong className="CityCountry">{inputValue.city},&nbsp; {inputValue.country}</strong>
@@ -159,7 +159,7 @@ const handleSearch = useCallback(
       </div>:<></>}
       <SevenDays data={weather} sendData={getHourlyOnClick}/>
       <button onClick={()=>{getLocation()}}>Click</button>
-      <TemperatureChart hour={weather.hours} data={hourly}/>
+      <TemperatureChart dataFor={weather} data={hourly}/>
       <SunChart data={hourly}/>
     </div>
   );
