@@ -39,7 +39,10 @@ export const SevenDays = ({data,sendData}) =>{
            return <div key={index} className={Style.content} 
            style={{border:index === click?"5px solid red":"none"}}
            onClick={()=>{
+            console.log(elem,"ELEMENT")
+                let res = new Date(elem.dt*1000).toLocaleString("en-UK", {timeZone: 'Asia/Kolkata'})
             sendData({
+                date:res.slice(0,10), // get Date
                 temp:elem.temp.day,
                 main:type,
                 pressure:elem.pressure,

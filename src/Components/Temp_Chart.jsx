@@ -1,3 +1,5 @@
+import { getElementError } from "@testing-library/react"
+import { useMemo } from "react"
 import {VictoryChart,VictoryTheme,VictoryArea} from "victory"
 import Style from "./temp_chart.module.css"
 // import clouds from "../Icons/clouds.svg";
@@ -12,6 +14,31 @@ import Style from "./temp_chart.module.css"
 
 export const TemperatureChart = ({hour,data}) =>{
 
+
+    let hourlyData = useMemo(()=>{
+
+        let twentyFour = [];
+
+       for(let elem of hour){
+            let res = new Date(elem.dt*1000).toLocaleString("en-UK", {timeZone: 'Asia/Kolkata'})
+            const time = res.slice(12,17)
+            const hours = +time.slice(0,2)
+
+            elem = {...elem,dt:time}
+
+            if(hours === 23 )
+            {
+                twentyFour.push(elem)
+                break
+            }
+            else
+            {
+                twentyFour.push(elem)
+            }
+        }
+
+    },[hour])
+
     const chartData = [
         { x: 1, y: 0 },
         { x: 2, y: 8 },
@@ -19,8 +46,6 @@ export const TemperatureChart = ({hour,data}) =>{
         { x: 4, y: 4 },
         { x: 5, y: 6 }
         ]
-
-        console.log(hour,"CHARTSDATA")
 
     return <div className={Style.ChartBox}>
         <div className={Style.TempBox}>

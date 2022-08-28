@@ -25,7 +25,6 @@ function App() {
   })
 
   const getHourlyOnClick = (value)=>{
-    console.log(value,"value")
       setHourly(value)
   }
 
