@@ -1,16 +1,15 @@
 
-import axios from "axios"
 import Style from "./sevenDays.module.css";
 import clouds from "../Icons/clouds.svg";
 import sunny from "../Icons/sunny.svg";
 import rain from "../Icons/rain.svg"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
 
 export const SevenDays = ({data,sendData}) =>{
 
-    const [click,setClick] = useState(0)
+    const [click,setClick] = useState()
 
     const types = {
         Clear:sunny,
@@ -18,19 +17,32 @@ export const SevenDays = ({data,sendData}) =>{
         Rain:rain
     }
 
-    console.log(data)
+   useEffect(()=>{
+
+    let elem = data?.seven[0]
+        sendData({
+            temp:elem?.temp.day||"",
+            main:types[elem?.weather[0].main]||"",
+            pressure:elem?.pressure||"",
+            humidity:elem?.humidity||"",
+            sunrise: Time(elem?.sunrise,"sun")||"",// get Accurate Time
+            sunset: Time(elem?.sunset,"sun")||"" // get accurate time
+        })
+    },[data])
+
     let type; // For getting the Icons according to weather Type
 
     return <div id={Style.reportBox}>
         {data.seven.map((elem,index)=>{
-            {type = types[elem.weather[0].main]} 
+            type = types[elem.weather[0].main]
+            
            return <div key={index} className={Style.content} 
-           style={{border:index == click?"5px solid red":"none"}}
+           style={{border:index === click?"5px solid red":"none"}}
            onClick={()=>{
             sendData({
                 temp:elem.temp.day,
                 main:type,
-                pressure:elem.presssure,
+                pressure:elem.pressure,
                 humidity:elem.humidity,
                 sunrise: Time(elem.sunrise,"sun"),// get Accurate Time
                 sunset: Time(elem.sunset,"sun") // get accurate time

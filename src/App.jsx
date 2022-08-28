@@ -25,6 +25,7 @@ function App() {
   })
 
   const getHourlyOnClick = (value)=>{
+    console.log(value,"value")
       setHourly(value)
   }
 
@@ -89,7 +90,7 @@ function showPosition(position) {
       </div>
       <SevenDays data={weather} sendData={getHourlyOnClick}/>
       <button onClick={()=>{getLocation()}}>Click</button>
-      <TemperatureChart data={hourly}/>
+      <TemperatureChart hour={weather.hours} data={hourly}/>
       <SunChart data={hourly}/>
     </div>
   );

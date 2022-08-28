@@ -1,8 +1,12 @@
+body{
+  background-color: black;
+}
+
 .App {
   margin:auto;
   width:50%;
   /* border:2px ridge red; */
-  background-color: rgb(191, 232, 244);
+  background-color: rgb(254, 202, 150);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px 0px;
 }
 

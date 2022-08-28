@@ -1,6 +1,23 @@
 
 .ChartBox{
+    border:8px solid red;
     height:300px;
     margin-top: 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.TempBox{
+    height:80px;
+}
+
+.TempBox > h1{
+    font-size: 54px;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.TempBox img{
+    width: 55px;
+    height:55px;
+    object-fit:contain;
 }

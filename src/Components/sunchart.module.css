@@ -1,0 +1,35 @@
+
+#sunchartBox{
+    height:500px;
+    margin-top: 1%;
+    font-size: 17px;
+}
+
+.PressureHumidity{
+    height:70px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#pressure, #humidity{
+    line-height: 0;
+    text-align: left;
+    padding:1% 10px;
+    width:45%;
+    background-color: rgb(233, 156, 156);
+}
+
+#sunText{
+    margin-top: 1%;
+    box-shadow: rgba(19, 18, 18, 0.133) 0px 0px 0px 1px, rgba(118, 106, 106, 0.521) 0px 0px 0px 1px inset;
+    height:70px;
+    display: flex;
+    line-height: 0;
+    justify-content: space-between;
+}
+
+#sunText > span{
+    width:100px;
+    margin:0 1%;
+    padding:0 1%;
+}
