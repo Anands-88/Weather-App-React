@@ -3,12 +3,20 @@ import { useMemo, useState } from 'react';
 import { Some } from '.';
 import './App.css'
 import { SevenDays } from './Components/SevenDaysReport';
+import { SunChart } from './Components/SunChart';
 import { TemperatureChart } from './Components/Temp_Chart';
 
 
 function App() {
   
-  const [hourly,setHourly] = useState()
+  const [hourly,setHourly] = useState({
+    temp:"",
+    main:"",
+    pressure:"",
+    humidity:"",
+    sunrise: "",
+    sunset: ""
+  })
 
   const [weather,setWeather] = useState({
     current:[],
@@ -61,13 +69,12 @@ function showPosition(position) {
 
   axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely&appid=${data}&units=metric`)
     .then(({data})=>{
-      console.log(data,"Data")
-      // setWeather({
-      //     ...weather,
-      //     current:data.current,
-      //     seven:data.daily,
-      //     hours:data.hourly
-      //   })
+      setWeather({
+          ...weather,
+          current:data.current,
+          seven:data.daily,
+          hours:data.hourly
+        })
     })
     .catch((error)=>{
       console.log(error)
@@ -82,7 +89,8 @@ function showPosition(position) {
       </div>
       <SevenDays data={weather} sendData={getHourlyOnClick}/>
       <button onClick={()=>{getLocation()}}>Click</button>
-      <TemperatureChart/>
+      <TemperatureChart data={hourly}/>
+      <SunChart data={hourly}/>
     </div>
   );
 }

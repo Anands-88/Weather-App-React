@@ -1,7 +1,16 @@
 import {VictoryChart,VictoryLine} from "victory"
 import Style from "./temp_chart.module.css"
+// import clouds from "../Icons/clouds.svg";
+// import sunny from "../Icons/sunny.svg";
+// import rain from "../Icons/rain.svg"
 
-export const TemperatureChart = () =>{
+// const types = {
+//     Clear:sunny,
+//     Clouds:clouds,
+//     Rain:rain
+// }
+
+export const TemperatureChart = ({data}) =>{
 
     const data = [
         { x: 1, y: 0 },
@@ -12,6 +21,9 @@ export const TemperatureChart = () =>{
         ]
 
     return <div className={Style.ChartBox}>
+        <div>
+            <h1>{data.temp}° <img src={data.main} alt={data.main} /></h1>
+        </div>
         <VictoryChart>
             <VictoryLine data={data}/>
         </VictoryChart>
