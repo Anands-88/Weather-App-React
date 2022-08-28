@@ -7,11 +7,20 @@ import { SunChart } from './Components/SunChart';
 import { TemperatureChart } from './Components/Temp_Chart';
 import debounce from "lodash/debounce";
 import countryFinder from "country-finder";
+import clouds from "./Icons/clouds.svg";
+import sunny from "./Icons/sunny.svg";
+import rain from "./Icons/rain.svg";
 
 
 function App() {
   
   let code = Some()
+
+  const types = {
+    Clear:sunny,
+    Clouds:clouds,
+    Rain:rain
+}
 
   const [hourly,setHourly] = useState({
     data:"",
@@ -24,7 +33,6 @@ function App() {
   })
 
   const [weather,setWeather] = useState({
-    current:[],
     seven:[],
     hours:[]
   })
@@ -34,7 +42,8 @@ function App() {
     country:"",
     type:"",
     temp:"",
-    result:""
+    result:"",
+    coord:{lat:"",lon:""}
   })
 
   const getHourlyOnClick = (value)=>{
@@ -81,12 +90,14 @@ function showPosition(position) {
 
   axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely&appid=${code}&units=metric`)
   .then(({data})=>{
+    console.log(data,"Data")
       setWeather({
           ...weather,
-          current:data.current,
           seven:data.daily,
           hours:data.hourly
         })
+
+        setInputValue({})
     })
     .catch((error)=>{
       console.log(error)
@@ -109,7 +120,8 @@ const handleSearch = useCallback(
           country:countryFinder.byCountryCode(data.sys.country).name,
           temp:data.main.temp,
           type:data.weather[0].main,
-          result:"Found"
+          result:"Found",
+          coords:{latitude:data.coord.lat,longitude:data.coord.lon}
         })
       })
       .catch((error)=>{
@@ -119,7 +131,6 @@ const handleSearch = useCallback(
     []
   );
 
-  console.log(inputValue,"input")
 
   return (
     <div className="App">
@@ -127,8 +138,24 @@ const handleSearch = useCallback(
         <input type="search" onChange={handleChange} placeholder="Search"/>
         <button></button>
       </div>
-      {inputValue.result?<div>
-        <strong>{inputValue.result}</strong>
+      {inputValue.result?
+        <div onClick={()=>{showPosition(inputValue)}} className="SearchResult">
+          {inputValue.result == "Not Found"
+          ?
+          <strong>{inputValue.result}</strong>
+          :
+          <>
+            <strong className="CityCountry">{inputValue.city},&nbsp; {inputValue.country}</strong>
+            <div id="Temps">
+                <div>
+                  <p>{inputValue.temp|0}° C</p>
+                  <p>{inputValue.type}</p>
+                </div>
+                <img src={types[inputValue.type]} alt={types[inputValue.type]} />
+            </div>
+
+          </>
+        }
       </div>:<></>}
       <SevenDays data={weather} sendData={getHourlyOnClick}/>
       <button onClick={()=>{getLocation()}}>Click</button>

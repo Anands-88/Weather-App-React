@@ -14,7 +14,7 @@ body{
   border:2px ridge rgb(14, 85, 0);
 }
 
-.search > input::placeholder{
+.search > input,.search > input::placeholder{
   font-size: 18px;
   font-weight: 900;
 }
@@ -38,4 +38,36 @@ button{
   position:absolute;
   top:10px;
   right:25.5%;
+}
+
+.SearchResult{
+  box-shadow: rgba(67, 71, 85, 0.2) 0px 0px 5.6px 0px, rgba(90, 125, 188, 0.05) 0px 5.6px 8px 0px;
+  background-color: wheat;
+  height:60px;
+  margin:auto;
+  display: flex;
+  width:98%;
+  border-radius: 10px;
+  justify-content: space-between;
+}
+
+.SearchResult:hover{
+  background-color: rgb(246, 246, 126);
+}
+
+.CityCountry{
+  font-size: 18px;
+  margin-top: 3%;
+  margin-left: 3%;
+}
+
+#Temps{
+  width:120px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#Temps>div{
+  line-height: 4px;
+  font-size: 18px;
 }
