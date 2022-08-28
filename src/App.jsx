@@ -1,15 +1,20 @@
 import axios from 'axios';
-import { useMemo, useState } from 'react';
+import { useMemo, useState,useCallback} from 'react';
 import { Some } from '.';
 import './App.css'
 import { SevenDays } from './Components/SevenDaysReport';
 import { SunChart } from './Components/SunChart';
 import { TemperatureChart } from './Components/Temp_Chart';
+import debounce from "lodash/debounce";
+import countryFinder from "country-finder";
 
 
 function App() {
   
+  let code = Some()
+
   const [hourly,setHourly] = useState({
+    data:"",
     temp:"",
     main:"",
     pressure:"",
@@ -22,6 +27,14 @@ function App() {
     current:[],
     seven:[],
     hours:[]
+  })
+
+  const [inputValue,setInputValue] = useState({
+    city:"",
+    country:"",
+    type:"",
+    temp:"",
+    result:""
   })
 
   const getHourlyOnClick = (value)=>{
@@ -64,11 +77,10 @@ function handleError(error) {
 }
 
 function showPosition(position) {
-  let data = Some()
   let {latitude,longitude} = position.coords
 
-  axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely&appid=${data}&units=metric`)
-    .then(({data})=>{
+  axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely&appid=${code}&units=metric`)
+  .then(({data})=>{
       setWeather({
           ...weather,
           current:data.current,
@@ -81,12 +93,43 @@ function showPosition(position) {
     })
 }
 
+const handleChange = (e) => {
+  const { value } = e.target;
+  setInputValue({...inputValue,input:value});
+  handleSearch(value);
+};
+
+const handleSearch = useCallback(
+    debounce((value) => {
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${code}&units=metric`)
+      .then(({data})=>{
+        console.log(data)
+        setInputValue({...inputValue,
+          city:data.name,
+          country:countryFinder.byCountryCode(data.sys.country).name,
+          temp:data.main.temp,
+          type:data.weather[0].main,
+          result:"Found"
+        })
+      })
+      .catch((error)=>{
+        setInputValue({result:"Not Found"})
+      })
+    }, 500),
+    []
+  );
+
+  console.log(inputValue,"input")
+
   return (
     <div className="App">
       <div className="search">
-        <input type="search" placeholder="Search"/>
+        <input type="search" onChange={handleChange} placeholder="Search"/>
         <button></button>
       </div>
+      {inputValue.result?<div>
+        <strong>{inputValue.result}</strong>
+      </div>:<></>}
       <SevenDays data={weather} sendData={getHourlyOnClick}/>
       <button onClick={()=>{getLocation()}}>Click</button>
       <TemperatureChart hour={weather.hours} data={hourly}/>

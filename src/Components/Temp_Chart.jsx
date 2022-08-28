@@ -21,23 +21,28 @@ export const TemperatureChart = ({hour,data}) =>{
 
        for(let elem of hour){
             let res = new Date(elem.dt*1000).toLocaleString("en-UK", {timeZone: 'Asia/Kolkata'})
-            const time = res.slice(12,17)
-            const hours = +time.slice(0,2)
+            const date = res.slice(0,10);
+            const time = res.slice(12,17);
+            const hours = +time.slice(0,2);
 
             elem = {...elem,dt:time}
-
-            if(hours === 23 )
+            if(data.date === date)
             {
-                twentyFour.push(elem)
-                break
-            }
-            else
-            {
-                twentyFour.push(elem)
+                if(hours === 23 )
+                {
+                    twentyFour.push(elem);
+                    break;
+                }
+                else
+                {
+                    twentyFour.push(elem);
+                }
             }
         }
 
-    },[hour])
+        console.log(twentyFour,"24")
+
+    },[data])
 
     const chartData = [
         { x: 1, y: 0 },

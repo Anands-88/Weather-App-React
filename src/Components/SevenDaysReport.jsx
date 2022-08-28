@@ -20,7 +20,9 @@ export const SevenDays = ({data,sendData}) =>{
    useEffect(()=>{
 
     let elem = data?.seven[0]
+    let res = new Date(elem?.dt*1000).toLocaleString("en-UK", {timeZone: 'Asia/Kolkata'})
         sendData({
+            date:res.slice(0,10)||"",
             temp:elem?.temp.day||"",
             main:types[elem?.weather[0].main]||"",
             pressure:elem?.pressure||"",
@@ -39,8 +41,7 @@ export const SevenDays = ({data,sendData}) =>{
            return <div key={index} className={Style.content} 
            style={{border:index === click?"5px solid red":"none"}}
            onClick={()=>{
-            console.log(elem,"ELEMENT")
-                let res = new Date(elem.dt*1000).toLocaleString("en-UK", {timeZone: 'Asia/Kolkata'})
+                let res = new Date(elem?.dt*1000).toLocaleString("en-UK", {timeZone: 'Asia/Kolkata'})
             sendData({
                 date:res.slice(0,10), // get Date
                 temp:elem.temp.day,
