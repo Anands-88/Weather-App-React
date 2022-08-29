@@ -7,22 +7,15 @@ import { SunChart } from './Components/SunChart';
 import { TemperatureChart } from './Components/Temp_Chart';
 import debounce from "lodash/debounce";
 import countryFinder from "country-finder";
-import clouds from "./Icons/clouds.png";
-import sunny from "./Icons/sunny.png";
-import rain from "./Icons/rain.png";
-import haze from "./Icons/haze.png";
+import { GetIcons } from './Icons/geticons';
+
 
 
 function App() {
   
-  let code = Some()
+  let code = Some() 
 
-  const types = {
-    Clear:sunny,
-    Clouds:clouds,
-    Rain:rain,
-    Haze:haze
-}
+  let types = GetIcons() // all icons images
 
   const [hourly,setHourly] = useState({
     data:"",
@@ -91,6 +84,7 @@ function showPosition(position) {
   let {latitude,longitude} = position.coords
 
   axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely&appid=${code}&units=metric`)
+  // axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${code}`)
   .then((res)=>{
     let data = res.data
       setWeather({
@@ -116,7 +110,7 @@ const handleSearch = useCallback(
     debounce((value) => {
       axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${code}&units=metric`)
       .then(({data})=>{
-        console.log(data)
+
         setInputValue({...inputValue,
           city:data.name,
           country:countryFinder.byCountryCode(data.sys.country).name,

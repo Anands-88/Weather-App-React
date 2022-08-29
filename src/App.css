@@ -75,7 +75,7 @@ button{
   font-size: 18px;
 }
 
-@media only screen and (min-width:375px) and (max-width:768px){
+@media only screen and (min-width:280px) and (max-width:768px){
   
   .App{
     width:100%;
