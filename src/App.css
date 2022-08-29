@@ -74,3 +74,16 @@ button{
   line-height: 4px;
   font-size: 18px;
 }
+
+@media only screen and (min-width:375px) and (max-width:768px){
+  
+  .App{
+    width:100%;
+  }
+
+  button{
+    position:absolute;
+    top:10px;
+    right:0;
+  }
+}
