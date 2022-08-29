@@ -1,7 +1,6 @@
 
 .ChartBox{
-    border:8px solid red;
-    height:400px;
+    height:40%;
     margin-top: 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     overflow-x: scroll;
@@ -25,6 +24,6 @@
 
 #Chart{
     width:100%;
-    border:2px solid black;
+    /* border:2px solid black; */
     height:78%;
 }

@@ -1,17 +1,19 @@
 body{
-  background-color: black;
+  background-color: rgb(136, 177, 225);
 }
 
 .App {
   margin:auto;
   width:50%;
-  /* border:2px ridge red; */
-  background-color: rgb(254, 202, 150);
+ background: #ffffff;
+ border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px 0px;
 }
 
 .search{
-  border:2px ridge rgb(14, 85, 0);
+  border-radius: 15px;
+  margin-top: 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px 0px;
 }
 
 .search > input,.search > input::placeholder{
@@ -42,9 +44,10 @@ button{
 
 .SearchResult{
   box-shadow: rgba(67, 71, 85, 0.2) 0px 0px 5.6px 0px, rgba(90, 125, 188, 0.05) 0px 5.6px 8px 0px;
-  background-color: wheat;
+  background-color: rgb(245, 244, 244);
   height:60px;
   margin:auto;
+  margin-top: 5px;
   display: flex;
   width:98%;
   border-radius: 10px;
@@ -52,7 +55,7 @@ button{
 }
 
 .SearchResult:hover{
-  background-color: rgb(246, 246, 126);
+  background-color: rgb(151, 227, 250);
 }
 
 .CityCountry{

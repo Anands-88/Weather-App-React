@@ -7,9 +7,10 @@ import { SunChart } from './Components/SunChart';
 import { TemperatureChart } from './Components/Temp_Chart';
 import debounce from "lodash/debounce";
 import countryFinder from "country-finder";
-import clouds from "./Icons/clouds.svg";
-import sunny from "./Icons/sunny.svg";
-import rain from "./Icons/rain.svg";
+import clouds from "./Icons/clouds.png";
+import sunny from "./Icons/sunny.png";
+import rain from "./Icons/rain.png";
+import haze from "./Icons/haze.png";
 
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
   const types = {
     Clear:sunny,
     Clouds:clouds,
-    Rain:rain
+    Rain:rain,
+    Haze:haze
 }
 
   const [hourly,setHourly] = useState({
@@ -50,9 +52,9 @@ function App() {
       setHourly(value)
   }
 
-  // const calIt = useMemo(()=>{
-  //   getLocation()
-  // },[])
+  const calIt = useMemo(()=>{
+    getLocation()
+  },[])
 
   // get visitor's location
 function getLocation() {
@@ -158,7 +160,6 @@ const handleSearch = useCallback(
         }
       </div>:<></>}
       <SevenDays data={weather} sendData={getHourlyOnClick}/>
-      <button onClick={()=>{getLocation()}}>Click</button>
       <TemperatureChart dataFor={weather} data={hourly}/>
       <SunChart data={hourly}/>
     </div>

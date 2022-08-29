@@ -1,25 +1,26 @@
 import { getElementError } from "@testing-library/react"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import {VictoryChart,
-        VictoryLine,VictoryBrushContainer
+        VictoryAxis,
+        VictoryLine,VictoryBrushContainer,
         VictoryZoomContainer} from "victory"
 import Style from "./temp_chart.module.css"
-// import clouds from "../Icons/clouds.svg";
-// import sunny from "../Icons/sunny.svg";
-// import rain from "../Icons/rain.svg"
-
-// const types = {
-//     Clear:sunny,
-//     Clouds:clouds,
-//     Rain:rain
-// }
 
 export const TemperatureChart = ({dataFor,data}) =>{
+
+    let {max,min} = dataFor?.seven[0]?.temp||0;
+
+    const [zoomDom,setZoomDom] = useState({
+        zoomDomain: { x: [min|0, max|0] }
+    })
+  
+    function handleZoom(domain) {
+        setZoomDom({ zoomDomain: domain });
+    }
 
     let chartData = useMemo(()=>{
 
         let twentyFour = [];
-        let {max,min} = dataFor?.seven[0]?.temp||0;
         let count = 0;
         
        for(let elem of dataFor.hours){
@@ -58,7 +59,7 @@ export const TemperatureChart = ({dataFor,data}) =>{
 
         let returnData = []
         twentyFour.map((elem,index)=>{
-            let obj = {y:elem.temp,x:index}
+            let obj = {y:elem.temp|0,x:index}
             returnData.push(obj)
         })
         console.log(returnData,"rETURNdATA")
@@ -71,34 +72,24 @@ export const TemperatureChart = ({dataFor,data}) =>{
         <div className={Style.TempBox}>
             <h1>{data.temp|0}°C <img src={data.main} alt={data.main} /></h1>
         </div>
-        <div>
-            <VictoryChart width={600} height={470} scale={{ x: "time" }}
+        <div id={Style.Chart}>
+            <VictoryChart width={660} height={280} 
                     containerComponent={
                         <VictoryZoomContainer
                         zoomDimension="x"
-                        zoomDomain={this.state.zoomDomain}
-                        onZoomDomainChange={this.handleZoom.bind(this)}/>
+                        zoomDomain={zoomDom.zoomDomain}
+                        onZoomDomainChange={handleZoom}/>
                     }
                     >
                 <VictoryLine
                     style={{
                         data: { stroke: "tomato" }
                     }}
-                    data={[
-                        { a: new Date(1982, 1, 1), b: 125 },
-                        { a: new Date(1987, 1, 1), b: 257 },
-                        { a: new Date(1993, 1, 1), b: 345 },
-                        { a: new Date(1997, 1, 1), b: 515 },
-                        { a: new Date(2001, 1, 1), b: 132 },
-                        { a: new Date(2005, 1, 1), b: 305 },
-                        { a: new Date(2011, 1, 1), b: 270 },
-                        { a: new Date(2015, 1, 1), b: 470 }
-                    ]}
-                    x="a"
-                    y="b" />
+                    data={chartData}
+                    />
 
                 </VictoryChart>
-                <VictoryChart
+                {/* <VictoryChart
                     padding={{ top: 0, left: 50, right: 50, bottom: 30 }}
                     width={600} height={100} scale={{ x: "time" }}
                     containerComponent={
@@ -126,7 +117,7 @@ export const TemperatureChart = ({dataFor,data}) =>{
                     x="key"
                     y="b"
                     />
-        </VictoryChart>
+        </VictoryChart> */}
       </div>
                 
 

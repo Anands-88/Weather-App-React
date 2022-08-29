@@ -1,10 +1,10 @@
 
 #reportBox{
-    margin-top: 5px;
+    margin-top: 10px;
     height:200px;
     overflow-x: scroll;
-    border:2px solid red;
     display: grid;
+    box-shadow: rgba(104, 148, 198, 0.4) 0px 0px 0px 2px, rgb(254, 254, 254) 0px 4px 6px -1px, rgb(189, 186, 186) 0px 1px 0px 0px inset;
     grid-template-columns: repeat(8,140px);
 }
 
@@ -16,8 +16,8 @@
     border-radius: 15px;
 }
 
-.content:checked{
-    border:4px solid yellow;
+.content:hover{
+    background: rgb(181, 218, 231);
 }
 
 .content > img{

@@ -1,8 +1,9 @@
 
 import Style from "./sevenDays.module.css";
-import clouds from "../Icons/clouds.svg";
-import sunny from "../Icons/sunny.svg";
-import rain from "../Icons/rain.svg"
+import clouds from "../Icons/clouds.png";
+import sunny from "../Icons/sunny.png";
+import rain from "../Icons/rain.png"
+import haze from "../Icons/haze.png";
 import { useState, useEffect } from "react";
 
 const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
@@ -14,7 +15,8 @@ export const SevenDays = ({data,sendData}) =>{
     const types = {
         Clear:sunny,
         Clouds:clouds,
-        Rain:rain
+        Rain:rain,
+        Haze:haze
     }
 
    useEffect(()=>{
@@ -39,7 +41,7 @@ export const SevenDays = ({data,sendData}) =>{
             type = types[elem.weather[0].main]
             
            return <div key={index} className={Style.content} 
-           style={{border:index === click?"5px solid red":"none"}}
+           style={{border:index === click?"5px ridge rgba(38, 171, 247, 0.94)":"none"}}
            onClick={()=>{
                 let res = new Date(elem?.dt*1000).toLocaleString("en-UK", {timeZone: 'Asia/Kolkata'})
             sendData({
