@@ -4,6 +4,7 @@
     height:400px;
     margin-top: 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    overflow-x: scroll;
 }
 
 .TempBox{
@@ -20,4 +21,10 @@
     width: 55px;
     height:55px;
     object-fit:contain;
+}
+
+#Chart{
+    width:100%;
+    border:2px solid black;
+    height:78%;
 }
